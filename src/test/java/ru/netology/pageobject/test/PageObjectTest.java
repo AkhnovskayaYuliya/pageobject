@@ -16,20 +16,20 @@ public class PageObjectTest {
     @BeforeEach
     void setup() {
         open("http://localhost:9999");
-        var LoginPage = new LoginPage();
-        var AuthInfo = DataHelper.getAuthInfo();
-        var VerificationPage = LoginPage.validLogin(AuthInfo);
-        var VerificationCode = DataHelper.getVerificationCodeFor(AuthInfo);
-        var DashBoard = VerificationPage.validVerify(VerificationCode);
+        var loginPage = new LoginPage();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = LoginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        var dashBoard = verificationPage.validVerify(verificationCode);
     }
 
     @Test
     void shouldTransferFromTheSecondCardToTheFirst() {
         var firstCardBalance = DashBoard.getCardBalance(getNumberOfTheFirstCard().getCardNumber());
         var secondCardBalance = DashBoard.getCardBalance(getNumberOfTheSecondCard().getCardNumber());
-        var TransferPage = DashBoard.transferToFirstCard();
+        var transferPage = DashBoard.transferToFirstCard();
         int amount = 5000;
-        TransferPage.moneyTransfer (amount, getNumberOfTheSecondCard());
+        transferPage.moneyTransfer(amount, getNumberOfTheSecondCard());
         Assertions.assertEquals(firstCardBalance + amount, DashBoard.getCardBalance(getNumberOfTheFirstCard().getCardNumber()));
         Assertions.assertEquals(secondCardBalance - amount, DashBoard.getCardBalance(getNumberOfTheSecondCard().getCardNumber()));
     }
@@ -38,12 +38,11 @@ public class PageObjectTest {
     void shouldNotTransferMoney() {
         var firstCardBalance = DashBoard.getCardBalance(getNumberOfTheFirstCard().getCardNumber());
         var secondCardBalance = DashBoard.getCardBalance(getNumberOfTheSecondCard().getCardNumber());
-        var TransferPage = DashBoard.transferToFirstCard();
+        var transferPage = DashBoard.transferToFirstCard();
         int amount = 15000;
-        TransferPage.moneyTransfer(amount, getNumberOfTheSecondCard());
-        TransferPage.Error();
+        transferPage.moneyTransfer(amount, getNumberOfTheSecondCard());
+        transferPage.error();
     }
-
 }
 
 

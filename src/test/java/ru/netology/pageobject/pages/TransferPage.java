@@ -28,9 +28,9 @@ public class TransferPage {
         fromCard.setValue(valueOf(from));
         transferButton.click();
         return new DashBoard();
-        }
-
-        public void Error() {
-            $(byText("Невозможно осуществить перевод, так как сумма превышает баланс.")).shouldBe(visible);
-        }
     }
+
+    public void error() {
+        $(byText("Невозможно осуществить перевод, так как сумма превышает баланс.")).shouldBe(visible);
+    }
+}
